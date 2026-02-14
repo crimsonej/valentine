@@ -66,7 +66,7 @@ section {
     font-family: 'Cinzel Decorative', cursive;
     font-size: clamp(3rem, 15vw, 10rem);
     line-height: 0.8;
-    background: linear-gradient(to bottom, #fff 30%, var(--bright-red) 100%);
+    background: linear-gradient(to bottom, #d30000 60%, var(--bright-red) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 20px;
@@ -313,4 +313,67 @@ section {
     0% { transform: scale(1); color: white; }
     40% { transform: scale(1.2); color: var(--bright-red); }
     100% { transform: scale(1); color: white; }
+}
+
+/* ===============================
+   MOBILE RESPONSIVE ADJUSTMENTS
+================================ */
+
+@media (max-width: 768px) {
+
+    /* Scale hero & Stay Crimson text */
+    .hero h1 {
+        font-size: clamp(2rem, 10vw, 5rem);
+        line-height: 1;
+    }
+    
+    .stay {
+        font-size: 50px;
+        margin-top: 40px;
+    }
+
+    /* Text blocks clickable */
+    .text-block, .click-animate {
+        font-size: 18px;
+        max-width: 90%;
+        margin: 15px auto;
+    }
+
+    /* Reduce horizontal-inner width for small screens */
+    .horizontal-inner {
+        flex-direction: column;
+        width: 100%;
+        height: auto;
+    }
+
+    .slide {
+        width: 100%;
+        height: auto;
+        padding: 5vw;
+    }
+
+    /* Particle Canvas */
+    canvas {
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    /* Reduce Three.js camera sensitivity */
+    body.mobile #three-canvas-container {
+        pointer-events: none; /* don't interfere with scroll */
+    }
+
+    /* Cursor Glow */
+    .cursor-glow {
+        width: 20px;
+        height: 20px;
+    }
+
+    /* Music toggle button smaller */
+    .music-toggle {
+        bottom: 15px;
+        right: 15px;
+        padding: 8px 14px;
+        font-size: 0.7rem;
+    }
 }

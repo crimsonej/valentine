@@ -77,6 +77,20 @@ window.addEventListener('resize', initParticles);
 initParticles();
 loopParticles();
 
+const maxParticles = window.innerWidth < 768 ? 80 : 150;
+
+// Inside initParticles():
+for(let i = 0; i < maxParticles; i++){
+    hearts.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        size: Math.random() * 3 + 1,
+        speed: Math.random() * 1.5 + 0.5,
+        opacity: Math.random() * 0.6 + 0.2
+    });
+}
+
+
 /* ===============================
    GSAP MAGIC
 ================================ */
@@ -219,6 +233,22 @@ window.addEventListener("resize",()=>{
 /* ===============================
    MOTION SENSITIVE BACKGROUND
 ================================ */
+window.addEventListener("mousemove", e => {
+    const scale = window.innerWidth < 768 ? 60 : 30;
+    const x = (window.innerWidth/2 - e.clientX) / scale;
+    const y = (window.innerHeight/2 - e.clientY) / scale;
+    motionBg.style.transform = `translate(${x}px, ${y}px)`;
+});
+
+if (window.DeviceOrientationEvent) {
+    window.addEventListener("deviceorientation", event => {
+        const scale = window.innerWidth < 768 ? 12 : 8;
+        const tiltX = event.gamma / scale;
+        const tiltY = event.beta / scale;
+        motionBg.style.transform = `translate(${tiltX}px, ${tiltY}px)`;
+    });
+}
+
 
 const motionBg = document.getElementById("motion-bg");
 
@@ -248,3 +278,8 @@ document.querySelectorAll(".click-animate").forEach(el => {
         el.classList.add("active");
     });
 });
+
+// Add a 'mobile' class to body for CSS overrides
+if (/Mobi|Android/i.test(navigator.userAgent)) {
+    document.body.classList.add("mobile");
+}
