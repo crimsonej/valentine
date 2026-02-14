@@ -1,0 +1,316 @@
+/* styles.css */
+:root {
+    --crimson: #9e001c;
+    --bright-red: #ff1f44;
+    --gold: #d4af37;
+    --dark: #050001;
+    --glass: rgba(10, 0, 5, 0.8);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background-color: var(--dark);
+    color: #fff;
+    font-family: 'Outfit', sans-serif;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Seamless Background */
+#bg-particles {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: -1;
+    background: radial-gradient(circle at 50% 50%, #1a0005 0%, #050001 100%);
+}
+
+canvas { display: block; }
+
+/* 3D Canvas Container */
+#three-canvas-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0; /* Behind content but above background */
+    pointer-events: none; /* Allow interaction with content below */
+}
+
+/* Smooth Scroll Container */
+#viewport {
+    width: 100%;
+    position: relative;
+    z-index: 1; /* Above 3D canvas */
+}
+
+section {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 5vh 5vw;
+}
+
+/* --- Hero Section --- */
+.hero {
+    text-align: center;
+    z-index: 10;
+}
+
+.hero h1 {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: clamp(3rem, 15vw, 10rem);
+    line-height: 0.8;
+    background: linear-gradient(to bottom, #fff 30%, var(--bright-red) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    letter-spacing: 8px;
+    color: var(--gold);
+    text-transform: uppercase;
+    font-weight: 300;
+}
+
+/* --- Quote Styling --- */
+.quote-container {
+    max-width: 800px;
+    text-align: center;
+}
+
+.big-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 4rem);
+    line-height: 1.1;
+    font-style: italic;
+    margin-bottom: 30px;
+}
+
+.big-quote span {
+    color: var(--bright-red);
+    display: block;
+}
+
+/* --- Horizontal Experience --- */
+.horizontal-outer {
+    overflow: hidden;
+    width: 100%;
+}
+
+.horizontal-inner {
+    display: flex;
+    width: 400vw; /* 4 massive slides */
+    height: 100vh;
+}
+
+.slide {
+    width: 100vw;
+    height: 100vh;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5vw;
+}
+
+/* Glass Cards */
+.feature-card {
+    background: var(--glass);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 60px;
+    border-radius: 40px;
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    max-width: 1100px;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+    position: relative;
+}
+
+.card-text h3 {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 2.5rem;
+    color: var(--gold);
+    margin-bottom: 20px;
+}
+
+.card-text p {
+    font-size: 1.2rem;
+    font-weight: 200;
+    line-height: 1.6;
+}
+
+/* --- Animated "Live" Character (CSS/SVG) --- */
+.anime-char-svg {
+    width: 300px;
+    height: 300px;
+    filter: drop-shadow(0 0 20px var(--bright-red));
+    animation: float 4s infinite ease-in-out;
+}
+
+/* Floating Animation */
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(2deg); }
+}
+
+/* --- Floating Love Elements --- */
+.floating-heart {
+    position: absolute;
+    color: var(--bright-red);
+    opacity: 0.3;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* --- Grid of Quotes Section --- */
+.quote-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.grid-item {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 40px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 31, 68, 0.1);
+    transition: 0.4s;
+}
+
+.grid-item:hover {
+    border-color: var(--bright-red);
+    background: rgba(255, 31, 68, 0.05);
+}
+
+/* --- Small Sexy Footer --- */
+.site-footer {
+    height: 80px;
+    background: #000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5vw;
+    font-size: 0.8rem;
+    color: #444;
+    border-top: 1px solid #111;
+    letter-spacing: 1px;
+}
+
+.site-footer strong { color: var(--crimson); }
+.site-footer span { color: #888; margin-left: 10px; }
+
+/* Responsiveness */
+@media (max-width: 900px) {
+    .feature-card { flex-direction: column; text-align: center; padding: 30px; }
+    .quote-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 5rem; }
+}
+
+/* --- Cursor Glow --- */
+.cursor-glow {
+    position: fixed;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    pointer-events: none;
+    background: radial-gradient(circle, rgba(255,31,68,0.6) 0%, transparent 70%);
+    mix-blend-mode: screen;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+}
+
+/* --- Floating Love Messages --- */
+.love-message {
+    position: fixed;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--bright-red);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 20;
+}
+
+/* --- Music Button --- */
+.music-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--glass);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 12px 18px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    color: var(--gold);
+    z-index: 50;
+    transition: 0.3s;
+}
+
+.music-toggle:hover {
+    background: rgba(255,31,68,0.2);
+    transform: scale(1.05);
+}
+
+/* --- Magnetic Card Hover --- */
+.feature-card {
+    transition: transform 0.3s ease;
+}
+
+/* --- Soft Pulse Glow --- */
+@keyframes pulseGlow {
+    0%,100% { filter: drop-shadow(0 0 10px var(--bright-red)); }
+    50% { filter: drop-shadow(0 0 25px var(--bright-red)); }
+}
+
+.anime-char-svg {
+    animation: float 4s infinite ease-in-out, pulseGlow 3s infinite;
+}
+
+/* ===============================
+   MOTION BACKGROUND LAYER
+================================ */
+
+#motion-bg {
+    position: fixed;
+    top: -10%;
+    left: -10%;
+    width: 120%;
+    height: 120%;
+    background: radial-gradient(circle at center, rgba(255,31,68,0.15), transparent 60%);
+    z-index: -2;
+    transition: transform 0.15s ease-out;
+    pointer-events: none;
+}
+
+/* ===============================
+   CLICK TEXT ANIMATION
+================================ */
+
+.click-animate {
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+.click-animate.active {
+    animation: textBurst 0.6s ease forwards;
+}
+
+@keyframes textBurst {
+    0% { transform: scale(1); color: white; }
+    40% { transform: scale(1.2); color: var(--bright-red); }
+    100% { transform: scale(1); color: white; }
+}

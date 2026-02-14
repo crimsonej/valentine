@@ -1,0 +1,195 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crimson Wishes | Valentine 2026</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Outfit:wght@100;300;600&family=Playfair+Display:ital,wght@1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+    <audio id="bg-audio" loop>
+        <source src="https://cdn.pixabay.com/download/audio/2022/02/11/audio_730623a31c.mp3?filename=romantic-piano-8258.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="bg-particles">
+        <canvas id="particle-canvas"></canvas>
+    </div>
+
+    <div id="three-canvas-container"></div> <!-- Container for 3D scene -->
+
+    <div id="viewport">
+        
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Crimson<br>Wishes</h1>
+                <p>Valentine 2026 Edition</p>
+                <div style="margin-top: 40px; opacity: 0.5; font-size: 0.8rem;">SCROLL TO UNFOLD THE STORY</div>
+            </div>
+        </section>
+
+        <section class="v-quote">
+            <div class="quote-container">
+                <p class="big-quote">
+                    "In the arithmetic of love, one plus one equals <span>Everything</span>"
+                </p>
+                <p style="font-weight: 100; opacity: 0.6;">And two minus one equals nothing.</p>
+            </div>
+        </section>
+
+        <div class="horizontal-outer">
+            <div class="horizontal-inner">
+                
+                <div class="slide">
+                    <div class="feature-card">
+                        <svg class="anime-char-svg" viewBox="0 0 200 200">
+                            <defs>
+                                <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#ff1f44;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#9e001c;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                            <circle cx="100" cy="100" r="80" fill="url(#grad1)" opacity="0.2" />
+                            <path d="M100 60 C 80 40, 40 50, 40 90 C 40 130, 100 170, 100 170 C 100 170, 160 130, 160 90 C 160 50, 120 40, 100 60" fill="url(#grad1)">
+                                <animate attributeName="d" dur="3s" repeatCount="indefinite" 
+                                    values="M100 60 C 80 40, 40 50, 40 90 C 40 130, 100 170, 100 170 C 100 170, 160 130, 160 90 C 160 50, 120 40, 100 60;
+                                            M100 65 C 85 45, 45 55, 45 95 C 45 135, 100 175, 100 175 C 100 175, 155 135, 155 95 C 155 55, 115 45, 100 65;
+                                            M100 60 C 80 40, 40 50, 40 90 C 40 130, 100 170, 100 170 C 100 170, 160 130, 160 90 C 160 50, 120 40, 100 60" />
+                            </path>
+                        </svg>
+                        <div class="card-text">
+                            <h3>Pure Soul</h3>
+                            <p>Love is not finding a perfect person, it is seeing an imperfect person perfectly. Today we celebrate the magic in the flaws.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slide">
+                    <div class="feature-card">
+                        <div class="card-text">
+                            <h3>The Spark</h3>
+                            <p>Every heartbeat is a silent message. A rhythm shared between two souls that have found their home in each other.</p>
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&q=80&w=400" alt="Rose" style="width:300px; border-radius:20px;">
+                    </div>
+                </div>
+
+                <div class="slide">
+                    <div class="feature-card">
+                        <div class="card-text">
+                            <h3>Eternal Bloom</h3>
+                            <p>True love doesn't just happen once. It happens every single morning when you choose to stay, to listen, and to love again.</p>
+                        </div>
+                        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3N2eXFmYmZkMnd3OXBqZ3Z4bmZzOXBqZ3Z4bmZzOXBqZ3Z4bmZzJmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/3o7TKVUn7iM8FMEU24/giphy.gif" alt="Anime Stars" class="card-img">
+                    </div>
+                </div>
+
+                <div class="slide">
+                    <div class="feature-card" style="border: 2px solid var(--gold);">
+                        <div class="card-text" style="text-align: center; width: 100%;">
+                            <h3>The Infinite Loop</h3>
+                            <p>"To the world, you may be one person, but to one person, you are the world."</p>
+                        </div>
+                        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMWM0azAwYWt0MDNkMTlsMnRsbjdzbWQ2cm04eTQwc3N1bnkwZjBweSZlcD12MV9naWZzX3RyZW5kaW5nJmN0PWc/jyYLZNC0smvFiNZur9/giphy.gif" alt="Rose" style="width:300px; border-radius:20px;">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <section class="v-grid">
+            <div class="click-animate">
+                <div class="quote-grid">
+                    <div class="grid-item">
+                        <p>"Love is a canvas furnished by nature and embroidered by imagination."</p>
+                    </div>
+                    <div class="grid-item">
+                        <p>"Where there is love there is life."</p>
+                    </div>
+                    <div class="grid-item">
+                        <p>"Being deeply loved by someone gives you strength, while loving someone deeply gives you courage."</p>
+                    </div>
+                    <div class="grid-item">
+                        <p>"Love is the beauty of the soul."</p>
+                    </div>
+                    <div class="grid-item">
+                        <p>"The best thing to hold onto in life is each other."</p>
+                    </div>
+                    <div class="grid-item">
+                        <p>"Love doesn't make the world go round. Love is what makes the ride worthwhile."</p>
+                    </div>
+                    <div class="grid-item">
+                        <p>"In dreams and in love there are no impossibilities."</p>
+                    </div>
+                    <div class="grid-item">
+                        <p>"Love is composed of a single soul inhabiting two bodies."</p>
+                    </div>
+                    <div class="grid-item">
+                        <p>"We are most alive when we're in love."</p>
+                    </div>
+                    <div class="grid-item">
+                        <p>"Love cures people—both the ones who give it and the ones who receive it."</p>
+                    </div>
+                    <div class="grid-item">
+                        <p>"The heart has its reasons of which reason knows nothing."</p>
+                    </div>
+                    <div class="grid-item">
+                        <p>"Love is friendship set on fire."</p>
+                    </div>
+                    <div class="grid-item">
+                        <p>"To love and be loved is to feel the sun from both sides."</p>
+                    </div>
+                    <div class="grid-item">
+                        <p>"Love is the bridge between you and everything."</p>
+                    </div>
+                    <div class="grid-item">
+                        <p>"Love is when the other person's happiness is more important than your own."</p>
+                    </div>
+                    <div class="grid-item">
+                        <p>"The greatest happiness of life is the conviction that we are loved."</p>
+                    </div>
+                    <div class="grid-item">
+                        <p>"Love is not only something you feel, it is something you do."</p>
+                    </div>
+                    <div class="grid-item">
+                        <p>"In love, there is no room for hesitation."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="v-final">
+            <div class="quote-container">
+                <h2 style="font-family: 'Cinzel Decorative'; font-size: 3rem; color: var(--bright-red);">Stay Crimson.</h2>
+                <p style="margin-top: 20px; font-weight: 200;">May your day be filled with endless warmth and light, Eli!</p>
+            </div>
+        </section>
+
+        <footer class="site-footer">
+            <div>&copy; 2026 <strong>Joachim Elijah</strong></div>
+            <div><span>Contact:</span> 0742184690</div>
+        </footer>
+
+    </div>
+
+    <script src="script.js"></script>
+    <div class="cursor-glow"></div>
+    <div class="music-toggle">MUSIC</div>
+    <!-- Motion Gradient Layer -->
+    <div id="motion-bg"></div>
+
+<!-- Background Audio (used by your JS) -->
+    <audio id="bg-audio" loop>
+        <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_8c51bdf9f3.mp3?filename=dark-trap-hip-hop-11477.mp3" type="audio/mp3">
+    </audio>
+
+
+</body>
+</html>
