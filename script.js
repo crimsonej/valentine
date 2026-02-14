@@ -16,84 +16,139 @@ bgAudio.play().then(() => {
     }, { once: true });
 });
 
-// Ambient Layer
-const ambientAudio = new Audio("https://cdn.pixabay.com/download/audio/2022/03/15/audio_5b3f6b5a6f.mp3?filename=romantic-ambient-112997.mp3");
-ambientAudio.loop = true;
-ambientAudio.volume = 0.2;
-ambientAudio.play().catch(()=>{});
+/* Click effects (delegated) */
+window.addEventListener("click", e => {
+    const target = e.target;
 
-/* ===============================
-   CURSOR GLOW
-================================ */
-
-const glow = document.createElement("div");
-glow.className = "cursor-glow";
-document.body.appendChild(glow);
-
-window.addEventListener("mousemove", e => {
-    glow.style.left = e.clientX + "px";
-    glow.style.top = e.clientY + "px";
-});
-
-/* ===============================
-   PARTICLES (Your Original Engine Improved)
-================================ */
-
-const particleCanvas = document.getElementById('particle-canvas');
-const ctx = particleCanvas.getContext('2d');
-let w, h, hearts = [];
-
-function initParticles() {
-    w = particleCanvas.width = window.innerWidth;
-    h = particleCanvas.height = window.innerHeight;
-    hearts = [];
-    for(let i = 0; i < 150; i++) {
-        hearts.push({
-            x: Math.random() * w,
-            y: Math.random() * h,
-            size: Math.random() * 3 + 1,
-            speed: Math.random() * 1.5 + 0.5,
-            opacity: Math.random() * 0.6 + 0.2
-        });
+    // Music toggle: play/pause background audio
+    const musicBtn = target.closest('.music-toggle');
+    if (musicBtn) {
+        if (bgAudio.paused) {
+            bgAudio.play().catch(()=>{});
+            gsap.to(musicBtn, { scale: 1.08, duration: 0.12, yoyo: true, repeat: 1 });
+        } else {
+            bgAudio.pause();
+            gsap.to(musicBtn, { rotation: 15, duration: 0.12, yoyo: true, repeat: 1 });
+        }
+        return;
     }
-}
 
-function loopParticles() {
-    ctx.clearRect(0, 0, w, h);
-    ctx.fillStyle = '#ff1f44';
-    hearts.forEach(p => {
-        ctx.globalAlpha = p.opacity;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fill();
-        p.y -= p.speed;
-        p.x += Math.sin(p.y / 20) * 0.5;
-        if(p.y < 0) p.y = h;
-    });
-    requestAnimationFrame(loopParticles);
-}
+    // Hero title / hero-content: bold pop + letter spacing pulse
+    const hero = target.closest('.hero-content') || target.closest('.hero');
+    if (hero) {
+        const title = hero.querySelector('h1');
+        if (title) {
+            gsap.fromTo(title, { scale: 0.98, letterSpacing: '4px' }, { scale: 1.03, letterSpacing: '12px', duration: 0.28, yoyo: true, repeat: 1, ease: 'power2.out' });
+        }
+        return;
+    }
 
-window.addEventListener('resize', initParticles);
-initParticles();
-loopParticles();
+    // Big quote span: color flash and small scale
+    const bigQuoteSpan = target.closest('.big-quote') || target.matches('.big-quote span') && target;
+    if (bigQuoteSpan) {
+        const el = target.matches('.big-quote span') ? target : bigQuoteSpan.querySelector('span');
+        if (el) {
+            gsap.fromTo(el, { scale: 1 }, { scale: 1.08, color: 'var(--bright-red)', duration: 0.25, yoyo: true, repeat: 1, ease: 'power1.out' });
+        }
+        return;
+    }
 
-const maxParticles = window.innerWidth < 768 ? 80 : 150;
+    // Click on a feature card: small pop + floating hearts
+    const card = target.closest('.feature-card');
+    if (card) {
+        gsap.fromTo(card, { scale: 0.98 }, { scale: 1.02, duration: 0.25, yoyo: true, repeat: 1, ease: 'power2.out' });
+        // spawn 6 tiny hearts around click
+        for (let i = 0; i < 6; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'floating-heart';
+            heart.style.left = (e.clientX + (Math.random() - 0.5) * 80) + 'px';
+            heart.style.top = (e.clientY + (Math.random() - 0.5) * 40) + 'px';
+            heart.style.fontSize = (8 + Math.random() * 12) + 'px';
+            heart.style.opacity = 0.9;
+            heart.innerHTML = '❤';
+            document.body.appendChild(heart);
+            gsap.to(heart, { y: '-=60', x: '+=' + (Math.random() * 40 - 20), opacity: 0, duration: 1 + Math.random() * 0.6, onComplete: () => heart.remove() });
+        }
+        return;
+    }
 
-// Inside initParticles():
-for(let i = 0; i < maxParticles; i++){
-    hearts.push({
-        x: Math.random() * w,
-        y: Math.random() * h,
-        size: Math.random() * 3 + 1,
-        speed: Math.random() * 1.5 + 0.5,
-        opacity: Math.random() * 0.6 + 0.2
-    });
-}
+    // Click on card header/text specifically: subtle tilt
+    const cardText = target.closest('.card-text');
+    if (cardText) {
+        gsap.fromTo(cardText, { rotation: -2 }, { rotation: 2, duration: 0.18, yoyo: true, repeat: 1, ease: 'power1.inOut' });
+        return;
+    }
 
+    // Click on a slide (outside card): subtle bg flash
+    const slide = target.closest('.slide');
+    if (slide) {
+        const flash = document.createElement('div');
+        flash.style.position = 'absolute';
+        flash.style.inset = '0';
+        flash.style.background = 'radial-gradient(circle at ' + (e.clientX / window.innerWidth * 100) + '% ' + (e.clientY / window.innerHeight * 100) + '%, rgba(255,31,68,0.12), transparent 40%)';
+        flash.style.pointerEvents = 'none';
+        slide.appendChild(flash);
+        gsap.to(flash, { opacity: 0, duration: 0.8, onComplete: () => flash.remove() });
+        return;
+    }
 
-/* ===============================
-   GSAP MAGIC
-================================ */
+    // Click on particle canvas: tiny burst particles
+    const pCanvas = target.closest('#particle-canvas');
+    if (pCanvas) {
+        for (let i = 0; i < 12; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'floating-heart';
+            dot.style.left = (e.clientX + (Math.random() - 0.5) * 60) + 'px';
+            dot.style.top = (e.clientY + (Math.random() - 0.5) * 60) + 'px';
+            dot.style.fontSize = (6 + Math.random() * 8) + 'px';
+            dot.style.opacity = 0.9;
+            dot.innerHTML = '•';
+            document.body.appendChild(dot);
+            gsap.to(dot, { y: '-=80', x: '+=' + (Math.random() * 60 - 30), opacity: 0, duration: 0.9 + Math.random() * 0.5, onComplete: () => dot.remove() });
+        }
+        return;
+    }
+
+    // Click on 3D container: nudge camera for a brief tilt (if camera exists)
+    const threeCont = target.closest('#three-canvas-container');
+    if (threeCont && typeof camera !== 'undefined') {
+        const origX = camera.position.x;
+        const origY = camera.position.y;
+        gsap.to(camera.position, { x: origX + 0.4, y: origY + 0.25, duration: 0.3, yoyo: true, repeat: 1, ease: 'sine.inOut' });
+        gsap.fromTo(threeCont, { filter: 'brightness(1)' }, { filter: 'brightness(1.08)', duration: 0.18, yoyo: true, repeat: 1 });
+        return;
+    }
+
+    // Footer click: small upward pulse
+    const footer = target.closest('.site-footer');
+    if (footer) {
+        gsap.fromTo(footer, { y: 0 }, { y: -8, duration: 0.12, yoyo: true, repeat: 1, ease: 'power1.out' });
+        return;
+    }
+
+    // Click on grid-item: quick pop
+    const grid = target.closest('.grid-item');
+    if (grid) {
+        gsap.fromTo(grid, { y: 0 }, { y: -10, duration: 0.14, yoyo: true, repeat: 1, ease: 'power1.out' });
+        return;
+    }
+
+    // Click on images: zoom pulse
+    if (target.tagName === 'IMG') {
+        gsap.fromTo(target, { scale: 1 }, { scale: 1.06, duration: 0.18, yoyo: true, repeat: 1, ease: 'power1.out' });
+        return;
+    }
+
+    // Default: small floating message (keeps original feeling)
+    const msg = document.createElement('div');
+    msg.className = 'love-message';
+    msg.innerText = 'Forever ❤️';
+    document.body.appendChild(msg);
+    msg.style.left = e.clientX + 'px';
+    msg.style.top = e.clientY + 'px';
+    gsap.to(msg, { y: -100, opacity: 1, duration: 0.5 });
+    gsap.to(msg, { opacity: 0, delay: 1, duration: 1, onComplete: () => msg.remove() });
+});
 
 gsap.from(".hero-content", {
     opacity: 0,
@@ -105,6 +160,7 @@ gsap.from(".hero-content", {
 const horizontalInner = document.querySelector(".horizontal-inner");
 const slides = gsap.utils.toArray(".slide");
 
+// Run horizontal pin/scroll animation on all viewports (desktop and mobile)
 gsap.to(slides, {
     xPercent: -100 * (slides.length - 1),
     ease: "none",
@@ -191,19 +247,6 @@ window.addEventListener("mousemove", e=>{
     camera.position.y = -ScrollTrigger.getAll()[0]?.progress*2 + y;
 });
 
-/* Click Floating Text */
-window.addEventListener("click", e=>{
-    const msg = document.createElement("div");
-    msg.className="love-message";
-    msg.innerText="Forever ❤️";
-    document.body.appendChild(msg);
-    msg.style.left=e.clientX+"px";
-    msg.style.top=e.clientY+"px";
-
-    gsap.to(msg,{y:-100,opacity:1,duration:0.5});
-    gsap.to(msg,{opacity:0,delay:1,duration:1,onComplete:()=>msg.remove()});
-});
-
 /* Valentine Countdown */
 const target = new Date("Feb 14, 2026 00:00:00").getTime();
 setInterval(()=>{
@@ -233,6 +276,7 @@ window.addEventListener("resize",()=>{
 /* ===============================
    MOTION SENSITIVE BACKGROUND
 ================================ */
+const motionBg = document.getElementById("motion-bg");
 window.addEventListener("mousemove", e => {
     const scale = window.innerWidth < 768 ? 60 : 30;
     const x = (window.innerWidth/2 - e.clientX) / scale;
@@ -249,23 +293,6 @@ if (window.DeviceOrientationEvent) {
     });
 }
 
-
-const motionBg = document.getElementById("motion-bg");
-
-window.addEventListener("mousemove", e => {
-    const x = (window.innerWidth/2 - e.clientX) / 30;
-    const y = (window.innerHeight/2 - e.clientY) / 30;
-    motionBg.style.transform = `translate(${x}px, ${y}px)`;
-});
-
-/* Device Tilt Support */
-if (window.DeviceOrientationEvent) {
-    window.addEventListener("deviceorientation", event => {
-        const tiltX = event.gamma / 8;
-        const tiltY = event.beta / 8;
-        motionBg.style.transform = `translate(${tiltX}px, ${tiltY}px)`;
-    });
-}
 
 /* ===============================
    CLICK TEXT EFFECT
